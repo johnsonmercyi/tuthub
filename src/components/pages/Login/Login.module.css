@@ -1,0 +1,62 @@
+/*Mobile First Style*/
+.login {
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  justify-content: flex-start;
+
+  position: relative;
+
+  background: linear-gradient(180deg, #5a93d6, #5a93d6 20%, transparent);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url(../../../resources//images//login-image.png);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position-x: center;background-position-y: center;
+}
+
+.wrapper {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 2vw 3vw;
+}
+
+.forgotPassword {
+  color: #5a93d6;
+  margin-right: 2vw;
+}
+
+.signUp {
+  color: gray;
+  /* font-weight: 400; */
+  text-decoration: underline;
+}
+
+.forgotPassword,
+.signUp {
+  cursor: pointer;
+  font-size: 4vw;
+}
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

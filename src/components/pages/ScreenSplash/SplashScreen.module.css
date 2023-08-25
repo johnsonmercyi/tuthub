@@ -1,0 +1,141 @@
+/*Mobile First Style*/
+.splashScreen {
+  width : 100%;
+  height: 100%;
+
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  justify-content: flex-start;
+
+  position: relative;
+
+  /* background-image : url(../../../../public//images//sky.png);
+  background-repeat: no-repeat;
+  background-size  : 400%; */
+
+}
+
+.image {
+  width : 100%;
+  height: 100%;
+
+  /* position: relative; */
+
+  margin-top: 15vw;
+
+  background-image   : url(../../../resources//images/clip-education-2.png);
+  background-repeat  : no-repeat;
+  background-size    : 50%;
+  background-position: top;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : flex-start;
+}
+
+.circleLine {
+  width : 120%;
+  height: 120vw;
+
+  border-radius: 100%;
+  position     : absolute;
+  top          : -5vw;
+
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.circleLine.inner {
+  width : 80%;
+  height: 80vw;
+
+  top   : 4vw;
+  border: 2px solid rgba(196, 200, 255, 0.3);
+}
+
+.logoWrapper {
+  width : 100%;
+  height: 150%;
+
+  display        : flex;
+  flex-direction : column;
+  justify-content: flex-start;
+  align-items    : center;
+
+  /* background-color: aquamarine; */
+}
+
+.logoWrapper .logo {
+  width : 100%;
+  height: auto;
+
+  font-size  : 6vw;
+  font-weight: 700;
+  color      : #5a93d6;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.logoWrapper .text {
+  font-size              : 4vw;
+  background             : linear-gradient(180deg, rgb(34, 34, 34), rgb(166, 166, 166));
+  -webkit-background-clip: text;
+  /* For WebKit browsers */
+  background-clip        : text;
+  color                  : transparent;
+}
+
+.loaderWrapper {
+  width : 100%;
+  height: 100%;
+
+  display        : flex;
+  flex-direction : column;
+  justify-content: center;
+  align-items    : center;
+
+  background-image: url(../../../resources//images/pngegg\ \(2\).png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-position-y: 20vw;
+  
+}
+
+.loaderWrapper .loader {
+  width : 5vw;
+  height: 5vw;
+
+  position: relative;
+  top: 20vw;
+
+  border             : 0.6vw solid transparent;
+  border-top-color   : #003566;
+  border-bottom-color: #003566;
+  border-left-color  : rgba(0, 53, 102);
+  /* border-right-color  : rgba(0, 53, 102, 0.4); */
+  border-radius      : 100%;
+
+  overflow: visible;
+}
+
+.loaderWrapper .text {
+  /* width: 100%; */
+  position: relative;
+  top     : 15vw;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+  text-align    : center;
+  letter-spacing: 1px;
+
+  font-size  : 4.5vw;
+  font-weight: 400;
+  color      : rgb(34, 34, 34);
+
+  opacity: 0;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

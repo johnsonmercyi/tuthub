@@ -1,3 +1,20 @@
+html,
+body,
+* {
+  box-sizing: border-box;
+  padding   : 0;
+  margin    : 0;
+}
+
+body {
+  /* background: #26263d; */
+
+  /* background-image     : url(../public/bg.jpg);
+  background-repeat    : repeat;
+  background-blend-mode: overlay;
+  background-size      : 0.5px; */
+}
+
 .App {
   text-align: center;
 }

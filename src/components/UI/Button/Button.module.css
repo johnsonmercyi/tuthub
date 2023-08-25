@@ -1,0 +1,59 @@
+/*Mobile First Style*/
+.buttonWrapper {
+  width : 100%;
+  height: 12vw;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+
+  margin-bottom: 3vw;
+}
+
+.button {
+  width           : 100%;
+  height          : 100%;
+  border          : none;
+  border-radius   : 2vw;
+  background-color: rgba(90, 147, 214, 1);
+  color           : white;
+  font-size       : 4.5vw;
+
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+}
+
+.button.custom {
+  color: rgba(0, 0, 0, 0.2);
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+}
+
+.button.custom .text,
+.button.custom .image {
+  width      : 100%;
+  height     : 100%;
+  display    : flex;
+  align-items: center;
+  padding    : 0 0.5vw;
+}
+
+.button.custom .text {
+  text-align     : center;
+  justify-content: flex-end;
+}
+
+.button.custom .image {
+  justify-content: flex-start;
+  padding-top: 1.1vw;
+}
+
+.button.custom .image img {
+  width: 30%;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}
