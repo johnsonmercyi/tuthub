@@ -26,7 +26,8 @@
   background-image: url(../../../resources//images//login-image.png);
   background-repeat: no-repeat;
   background-size: 50%;
-  background-position-x: center;background-position-y: center;
+  background-position-x: center;
+  background-position-y: center;
 }
 
 .wrapper {
