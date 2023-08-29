@@ -94,8 +94,22 @@ const Login = () => {
 
   const loginHandler = () => {
     if (validateLoginField()) {
-      //⚠️submit form here...
-      console.log("Submit form here... 😃!!!");
+      /**
+       * ⚠️Do username and password 
+       * authentication here and 
+       * navigate to welcome page
+       */
+      console.log("You logged in! 😃");
+    }
+  }
+
+  const registerHandler = () => {
+    if (validateSignUpField()) {
+      /**
+       * ⚠️register user details here
+       * and navigate to login page
+       */
+      console.log("You registered! 😃");
     }
   }
 
@@ -251,13 +265,6 @@ const Login = () => {
       setError(regPasswordRef.current, regPasswordContainerRef.current, true, "Password is required.");
     }
     setRegPassword(event.target.value);
-  }
-
-  const registerHandler = () => {
-    if (validateSignUpField()) {
-      //⚠️submit form here...
-      console.log("Submit form here... 😃!!!");
-    }
   }
 
   function setError(field, container, isError, errorText) {
