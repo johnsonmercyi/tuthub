@@ -21,17 +21,17 @@ const SplashScreen = () => {
   }, []);
 
   const spinLoader = () => {
-    util.animate(loaderRef.current, 0, 1000, Infinity, "ease-in-out", [
+    util.animate(loaderRef.current, 0, 2000, Infinity, "ease-in-out", [
       {transform: "rotate(360deg)"}
     ], ()=> {
       loaderTextRef.current.innerHTML = util.greet();
       util.animate(loaderTextRef.current, 0, 1000, 1, "ease-in-out", [
-        { opacity: "0", top: "15vw" },
-        { opacity: "1", top: "20vw" },
+        { opacity: "0", top: "0" },
+        { opacity: "1", top: "1vw" },
       ], ()=> {
         navigateToLogin();
       });
-    }, 0);
+    }, 1);
   }
 
   const navigateToLogin = () => {
@@ -49,17 +49,13 @@ const SplashScreen = () => {
 
   return (
     <div className={style.splashScreen} ref={selfRef}>
-      <div className={style.image}>
-        <div className={style.circleLine}></div>
-        <div className={[style.circleLine, style.inner].join(" ")}></div>
-      </div>
       <div className={style.logoWrapper}>
-        <div className={style.logo}>SABI TUTOR</div>
-        <div className={style.text }>Learn from anything and anywhere</div>
-        <div className={style.loaderWrapper}>
-          <div className={style.loader} ref={loaderRef}></div>
-          <div className={style.text} ref={loaderTextRef}>Welcome</div>
-        </div>
+        <div className={style.logo}>SABI TUTOR LOGO</div>
+        {/* <div className={style.text }>Learn from anything and anywhere</div> */}
+      </div>
+      <div className={style.loaderWrapper}>
+        <div className={style.text} ref={loaderTextRef}>Welcome</div>
+        <div className={style.loader} ref={loaderRef}></div>
       </div>
     </div>
   );

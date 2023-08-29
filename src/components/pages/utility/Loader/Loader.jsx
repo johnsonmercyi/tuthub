@@ -18,7 +18,7 @@ const Loader = ({load, message, successHandler, ...props}) => {
   }, [load]);
 
   const spinLoader = () => {
-    util.animate(loaderRef.current, 0, 1000, Infinity, "ease-in-out", [
+    util.animate(loaderRef.current, 0, 2000, Infinity, "ease-in-out", [
       { transform: "rotate(360deg)" }
     ]);
   }

@@ -84,7 +84,7 @@ const Login = () => {
         { opacity: "0" },
       ], () => {
         //load new page here...
-        navigate('/welcome');
+        navigate('/welcome', {state: {username: username}});
       });
     }, 0);
   }

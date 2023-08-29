@@ -13,6 +13,8 @@ body {
   background-repeat    : repeat;
   background-blend-mode: overlay;
   background-size      : 0.5px; */
+  background-color: #5a93d6;
+  /* background : linear-gradient(180deg, rgba(255, 255, 255, 0.4), #5a93d6); */
 }
 
 .App {

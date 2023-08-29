@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import SplashScreen from '../../components/pages/ScreenSplash/SplashScreen';
 import Login from '../../components/pages/Login/Login';
 import Welcome from '../../components/pages/Welcome/Welcome';
+import Dashboard from '../../components/pages/Dashboard/Dashboard';
 
 const AppContainer = ({ classes = [], ...props }) => {
   const shouldLoadApp = useRef(true);
@@ -22,6 +23,7 @@ const AppContainer = ({ classes = [], ...props }) => {
         <Route index path="/" element={<SplashScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/welcome" element={<Welcome />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );
