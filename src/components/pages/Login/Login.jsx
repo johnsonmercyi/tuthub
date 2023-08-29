@@ -8,8 +8,12 @@ import Button from '../../UI/Button/Button';
 import * as icons from '../../../util/icons';
 import signUpImage from '../../../resources/images/sign-up.png';
 import loginImage from '../../../resources/images/login-image.png';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../utility/Loader/Loader';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const shouldLoadApp = useRef(true);
   const selfRef = useRef(null);
   const imageRef = useRef(null);
@@ -28,6 +32,7 @@ const Login = () => {
   const regPasswordContainerRef = useRef(null);
   const regPasswordRef = useRef(null);
 
+  const [load, setLoad] = useState(false);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -72,6 +77,18 @@ const Login = () => {
     });
   }
 
+  const navigateToWelcome = () => {
+    setTimeout(() => {
+      util.animate(selfRef.current, 0, 500, 1, "ease-in-out", [
+        { opacity: "1" },
+        { opacity: "0" },
+      ], () => {
+        //load new page here...
+        navigate('/welcome');
+      });
+    }, 0);
+  }
+
   const usernameChangeHandler = (event) => {
     if (event.target.value) {
       clearError(usernameRef.current, usernameContainerRef.current);
@@ -94,12 +111,16 @@ const Login = () => {
 
   const loginHandler = () => {
     if (validateLoginField()) {
+      console.log("Validation...");
+      setLoad(true);//show loading
       /**
-       * ⚠️Do username and password 
-       * authentication here and 
-       * navigate to welcome page
+       * ⚠️Submit form here for 
+       * user authentication.
        */
-      console.log("You logged in! 😃");
+      setTimeout(() => {
+        console.log("You logged in! 😃");
+        navigateToWelcome();
+      }, util.getRandomTime());
     }
   }
 
@@ -123,7 +144,7 @@ const Login = () => {
       } else {
         areFilled = true;
       }
-      
+
     } else {
       if (!username) {
         //username is not provided
@@ -146,17 +167,17 @@ const Login = () => {
         setError(fullnameRef.current, fullnameContainerRef.current, true, "Fullname is required.");
       }
 
-      if(!regUsername) {
+      if (!regUsername) {
         //regUsername is not provided
         setError(regUsernameRef.current, regUsernameContainerRef.current, true, "Username is required.");
       }
 
-      if(!email) {
+      if (!email) {
         //email is not provided
         setError(emailRef.current, emailContainerRef.current, true, "Email is required.");
       }
 
-      if(!regPassword) { 
+      if (!regPassword) {
         //regPassword is not provided
         setError(regPasswordRef.current, regPasswordContainerRef.current, true, "Password is required.");
       }
@@ -315,6 +336,7 @@ const Login = () => {
 
   return (
     <div className={style.login} ref={selfRef}>
+      <Loader load={load} message={"Processing login..."} />
       <div className={style.imageContainer} ref={imageRef}>
         <div className={style.image}></div>
       </div>

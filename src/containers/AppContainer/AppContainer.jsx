@@ -4,6 +4,7 @@ import style from './AppContainer.module.css';
 import { Route, Routes } from 'react-router-dom';
 import SplashScreen from '../../components/pages/ScreenSplash/SplashScreen';
 import Login from '../../components/pages/Login/Login';
+import Welcome from '../../components/pages/Welcome/Welcome';
 
 const AppContainer = ({ classes = [], ...props }) => {
   const shouldLoadApp = useRef(true);
@@ -19,7 +20,8 @@ const AppContainer = ({ classes = [], ...props }) => {
     <div className={[style.appContainer, classes.join(",")].join(" ")}>
       <Routes>
         <Route index path="/" element={<SplashScreen />} />
-        <Route index path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<Welcome />} />
       </Routes>
     </div>
   );
