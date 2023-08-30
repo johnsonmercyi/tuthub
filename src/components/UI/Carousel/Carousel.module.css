@@ -1,0 +1,56 @@
+/*Mobile First Style*/
+.carousel {
+  width : 100%;
+  max-width: 95vw;
+  height: 11rem;
+
+  /* display        : flex; */
+  justify-content: space-around;
+  align-items    : center;
+
+  overflow: hidden;
+
+  background-color: #5a93d6;
+  border-radius   : 1rem;
+
+  position: relative;
+}
+
+.slides {
+  width          : auto;
+  height         : 100%;
+
+  display        : flex;
+  justify-content: flex-start;
+  align-items    : center;
+}
+
+.dots {
+  width : 100%;
+  height: 1rem;
+
+  padding: 0.3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  bottom: 5%;
+  left   : 0;
+}
+
+.dot {
+  width: 0.4rem;
+  height: 0.4rem;
+
+  border-radius: 50%;
+
+  /* border: 1.5px solid black; */
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  background-color: white;
+  margin: 0 0.07rem;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}
