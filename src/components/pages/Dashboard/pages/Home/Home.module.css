@@ -1,0 +1,98 @@
+/*Mobile First Style*/
+.home {
+  width : 100%;
+  height: 100%;
+
+  display        : flex;
+  flex-direction : column;
+  justify-content: flex-start;
+  align-items    : center;
+
+  background-color: #f1f8fd;
+}
+
+.wrapper {
+  width : 100%;
+  height: 3rem;
+
+  flex-direction : row;
+  justify-content: space-between;
+
+  padding: 0 0.5rem 0 0.5rem;
+
+  /* background-color: bisque; */
+}
+
+.greeting,
+.searchIcon {
+  height     : 100%;
+  display    : flex;
+  align-items: center;
+}
+
+.greeting {
+  width          : 100%;
+  justify-content: flex-start;
+
+  font-size  : 0.9rem;
+  font-weight: 500;
+}
+
+.searchIcon {
+  width          : 4rem;
+  justify-content: center;
+  font-size      : 1.2rem;
+
+  /* background-color: aquamarine; */
+}
+
+.changeLevel {
+  width : 100%;
+  height: 100%;
+
+  display        : flex;
+  justify-content: flex-start;
+  align-items    : center;
+}
+
+.changeLevel .button {
+  width : 8rem;
+  height: 2rem;
+
+  color      : #5a93d6;
+  font-weight: 400;
+
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  text-align     : center;
+
+  border-radius: 0.9rem;
+  box-shadow   : 1px 2px 10px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+
+  background-color: white;
+}
+
+.activeLevel {
+  width : 100%;
+  height: 100%;
+
+  display        : flex;
+  justify-content: flex-end;
+  align-items    : center;
+}
+
+.activeLabel {
+  margin     : 0 0.5rem 0 0;
+  font-weight: 500;
+  color: #5a93d6;
+}
+
+.active {
+  color: black;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

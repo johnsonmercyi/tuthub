@@ -72,12 +72,12 @@ const Carousel = ({ slides = [], transitionDelay=5000, ...props }) => {
 
   return (
     <div className={style.carousel}>
-      <div className={style.slides} ref={slidesContainerRef}>
+      <div className={style.slides} ref={slidesContainerRef} key={"hghj"}>
         {
           slides.map((slide, index) => {
             return (
               <Slide
-                key={slide.name + "_" + index}
+                key={index}
                 header={slide.header}
                 buttonText={slide.buttonText}
                 contentText={slide.contentText}
@@ -94,7 +94,7 @@ const Carousel = ({ slides = [], transitionDelay=5000, ...props }) => {
           slides.map((slide, index) => {
             dotRefs.push(slide.dotRef);
             return (
-              <div className={style.dot} ref={slide.dotRef}></div>
+              <div className={style.dot} ref={slide.dotRef} key={"dot_" + index}></div>
             );
           })
         }
