@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { IoAccessibility, IoAppsOutline, IoArchiveSharp, IoAttachSharp, IoBookOutline, IoPlayCircleOutline, IoScanCircleOutline, IoSearch } from 'react-icons/io5';
-import { MdOutlineAddHomeWork, MdOutlinePermDeviceInformation } from 'react-icons/md';
+import { IoAppsOutline, IoArchiveSharp, IoAttachSharp, IoBookOutline, IoPlayCircleOutline, IoSearch } from 'react-icons/io5';
+import { MdOutlineAddHomeWork } from 'react-icons/md';
 import Wrapper from '../../../../../containers/Wrapper/Wrapper';
 import image1 from '../../../../../resources/images/1.png';
 import image2 from '../../../../../resources/images/2.png';
@@ -11,99 +11,229 @@ import ripple from '../../../../../util/ripple.module.css';
 import Carousel from '../../../../UI/Carousel/Carousel';
 import TitleListContainer from '../../../../UI/TitleListContainer/TitleListContainer';
 import MiniCard from '../../../../UI/cards/MiniCard/MiniCard';
-import style from './Home.module.css';
 import SimpleCard from '../../../../UI/cards/SimpleCard/SimpleCard';
+import style from './Home.module.css';
+import ChooseLevel from './ChooseLevel/ChooseLevel';
+import { fetchAcademicLevels, fetchFaculties, fetchSubAcademicLevels } from '../../../../../util/DummyDb';
+import Loader from '../../../utility/Loader/Loader';
 
-const Home = (props) => {
+const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
   const shouldAppLoad = useRef(true);
-  useEffect(()=> {
+
+  const [chooseLevel, setChooseLevel] = useState(false);
+  const [academicLevels, setAcademicLevels] = useState(fetchAcademicLevels);
+  const [subAcademicLevels, setSubAcademicLevels] = useState(null);
+  const [chooseLevelData, setChooseLevelData] = useState(academicLevels);
+  const [load, setLoad] = useState(false);
+
+  const [chooseLevelhistory, setChooseLevelHistory] = useState([]);
+
+
+  useEffect(() => {
     if (shouldAppLoad) {
       shouldAppLoad.current = false;
+      setChooseLevelHistory([{name: "home", target: null}]);
     }
   }, []);
 
+  const chooseLevelHandler = () => {
+    hideNavigationHandler(true);
+    setChooseLevel(true);
+  }
+
+  const levelClickHandler = (id, level, type) => {
+    //Make Http Request here...
+    if (type === "basic") {
+      setLoad(true);
+      setTimeout(() => {
+        setChooseLevelData(fetchSubAcademicLevels("academic_level_id", id));
+        setLoad(false);
+        setChooseLevelHistory(history => [...history, { name: "academic_level", target: level }]);
+      }, 2000);
+    } else if (type === "tertiary") {
+      setLoad(true);
+      setTimeout(() => {
+        setChooseLevelData(fetchFaculties("academic_level_id", id));
+        setLoad(false);
+        setChooseLevelHistory(history => [...history, { name: "academic_level", target: level }]);
+      }, 2000);
+    }
+
+  }
+
+  const chooseLevelDialogHistoryHandler = () => {
+    let previousIndex = chooseLevelhistory.length - 1;
+    const previousPage = chooseLevelhistory[previousIndex];
+    console.log("History: ", chooseLevelhistory);
+    console.log("Previous Page: ", previousPage);
+    if (previousPage.name === "home") {
+      //dismiss the dialog
+      //Make Http Request here...S
+      setChooseLevel(false);
+      hideNavigationHandler(false);
+      console.log("home");
+    } else if (previousPage.name === "academic_level") {
+      //load in the academic level page
+      //Make Http Request here...
+      setLoad(true);
+      setTimeout(() => {
+        setChooseLevelData(fetchAcademicLevels());
+        setLoad(false);
+        setChooseLevelHistory(chooseLevelhistory.slice(0, previousIndex));
+      }, 2000);
+      console.log("academic_level");
+    } else if (previousPage.name === "sub_academic_level") {
+      //load in the sub academic level page
+    }
+  }
+
   return (
     <div className={style.home}>
-      {/* Greeting and Search bar */}
-      <Wrapper styleClass={[style.wrapper]}>
-        <span className={style.greeting}>Hello Soft!</span>
-        <span className={style.searchIcon}><IoSearch /></span>
+      <Wrapper customStyle={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '17rem',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        zIndex: 1,
+      }}>
+        {/* Greeting and Search bar */}
+        <Wrapper styleClass={[style.wrapper]}>
+          <span className={style.greeting}>Hello Soft!</span>
+          <span className={style.searchIcon}><IoSearch /></span>
+        </Wrapper>
+
+        {/* Carousel */}
+        <Carousel slides={[
+          {
+            name: "slide_1",
+            header: "Secure The Online World",
+            contentText: "Let's get you started now!",
+            buttonText: "Get started",
+            image: image1,
+            imageSize: "70%",
+            dotRef: useRef(null),
+            clickHandler: null,
+          },
+          {
+            name: "slide_2",
+            header: "Sabi Tutor No Dey Carry Last",
+            contentText: "Try us make you confirm!",
+            buttonText: "Follow us talk",
+            image: image2,
+            imageSize: "90%",
+            dotRef: useRef(null),
+            clickHandler: null,
+          },
+          {
+            name: "slide_3",
+            header: "Academy in Your Pocket",
+            contentText: "knowledge is power!",
+            buttonText: "Start here",
+            image: image3,
+            imageSize: "70%",
+            dotRef: useRef(null),
+            clickHandler: null,
+          },
+          {
+            name: "slide_4",
+            header: "Go Premium To Sky",
+            contentText: `Opportunity to upgrade your skills!`,
+            buttonText: "Grab it!",
+            image: image4,
+            imageSize: "90%",
+            dotRef: useRef(null),
+            clickHandler: null,
+          }
+        ]} transitionDelay={3000} />
+
+        {/* Change class */}
+        <Wrapper customStyle={{
+          height: "3rem",
+          minHeight: "3rem",
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0 0.8rem",
+        }}>
+          <div className={style.changeLevel}>
+            <span
+              className={[style.button, ripple.ripple, ripple.darkWaves].join(" ")}
+              onClick={chooseLevelHandler}>Change Level</span>
+          </div>
+          <div className={style.activeLevel}>
+            <span className={style.activeLabel}>Active:</span>
+            <span className={style.active}>Basic One</span>
+          </div>
+        </Wrapper>
       </Wrapper>
 
-      {/* Carousel */}
-      <Carousel slides={[
-        {
-          name: "slide_1",
-          header: "Secure The Online World",
-          contentText: "Let's get you started now!",
-          buttonText: "Get started",
-          image: image1,
-          imageSize: "70%",
-          dotRef: useRef(null),
-          clickHandler: null,
-        },
-        {
-          name: "slide_2",
-          header: "Sabi Tutor No Dey Carry Last",
-          contentText: "Try us make you confirm!",
-          buttonText: "Follow us talk",
-          image: image2,
-          imageSize: "90%",
-          dotRef: useRef(null),
-          clickHandler: null,
-        },
-        {
-          name: "slide_3",
-          header: "Academy in Your Pocket",
-          contentText: "knowledge is power!",
-          buttonText: "Start here",
-          image: image3,
-          imageSize: "70%",
-          dotRef: useRef(null),
-          clickHandler: null,
-        },
-        {
-          name: "slide_4",
-          header: "Go Premium To Sky",
-          contentText: `Opportunity to upgrade your skills!`,
-          buttonText: "Grab it!",
-          image: image4,
-          imageSize: "90%",
-          dotRef: useRef(null),
-          clickHandler: null,
-        }
-      ]} transitionDelay={3000} />
+      <Wrapper customStyle={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: 'calc(100% - 17rem)',
+        marginTop: "17.5rem",
+        marginBottom: "0.3rem",
+        width: '100%',
+        overflowY: "auto",
+      }}>
 
-      {/* Change class */}
-      <Wrapper styleClass={[style.wrapper]} customStyle={{ height: "4rem" }}>
-        <div className={style.changeLevel}>
-          <span className={[style.button, ripple.ripple, ripple.darkWaves].join(" ")}>Change Level</span>
-        </div>
-        <div className={style.activeLevel}>
-          <span className={style.activeLabel}>Active:</span>
-          <span className={style.active}>Basic One</span>
-        </div>
+        {/* Mini Cards for subject, Live lesson, Take Exams */}
+        <Wrapper customStyle={{
+          height: "auto",
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0 0.3rem",
+        }}>
+          <MiniCard title={"Subjects"} content={"145 Courses"} image={<IoBookOutline />} />
+          <MiniCard title={"Live Lessons"} content={"120 Courses"} image={<IoPlayCircleOutline />} />
+          <MiniCard title={"Take Exams"} content={"145 Courses"} image={<MdOutlineAddHomeWork />} />
+        </Wrapper>
+
+        <Wrapper customStyle={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0.5rem 0.4rem",
+        }}>
+          {/* Past Questions and Answers Component */}
+          <TitleListContainer title={"Past Questions and Answers"}>
+            <SimpleCard image={<IoAppsOutline />} title={"UTME Questions"} />
+            <SimpleCard image={<IoArchiveSharp />} title={"JAMB Past Questions"} />
+            <SimpleCard image={<IoAttachSharp />} title={"WAEC Past Questions"} />
+          </TitleListContainer>
+
+          {/* Explore Courses Component */}
+          <TitleListContainer title={"Explore Our Courses"}>
+            <SimpleCard customStyle={{ width: "100%" }} image={<IoAppsOutline />} title={"UMTE QUESTIONS"} />
+            <SimpleCard customStyle={{ width: "100%" }} image={<IoArchiveSharp />} title={"JAMB PAST QUESTIONS"} />
+          </TitleListContainer>
+        </Wrapper>
       </Wrapper>
 
-      {/* Mini Cards for subject, Live lesson, Take Exams */}
-      <Wrapper styleClass={[style.wrapper]} customStyle={{ height: "auto" }}>
-        <MiniCard title={"Subjects"} content={"145 Courses"} image={<IoBookOutline />}/>
-        <MiniCard title={"Live Lessons"} content={"120 Courses"} image={<IoPlayCircleOutline />} />
-        <MiniCard title={"Take Exams"} content={"145 Courses"} image={<MdOutlineAddHomeWork />} />
-      </Wrapper>
+      <ChooseLevel
+        chooseLevelDialogHistoryHandler={chooseLevelDialogHistoryHandler}
+        data={chooseLevelData}
+        dataLength={chooseLevelData.length}
+        launch={chooseLevel}
+        levelClickHandler={levelClickHandler} />
 
-      {/* Past Questions and Answers Component */}
-      <TitleListContainer title={"Past Questions and Answers"}>
-        <SimpleCard image={<IoAppsOutline />} title={"UMTE QUESTIONS"} />
-        <SimpleCard image={<IoArchiveSharp />} title={"JAMB PAST QUESTIONS"} />
-        <SimpleCard image={<IoAttachSharp />} title={"WAEC PAST QUESTIONS"} />
-      </TitleListContainer>
+      <Loader load={load} message={"loading..."} />
 
-      {/* Explore Courses Component */}
-      <TitleListContainer title={"Explore Our Courses"}>
-        <SimpleCard image={<IoAppsOutline />} title={"UMTE QUESTIONS"} />
-        <SimpleCard image={<IoArchiveSharp />} title={"JAMB PAST QUESTIONS"} />
-      </TitleListContainer>
     </div>
   );
 }

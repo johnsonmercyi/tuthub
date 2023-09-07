@@ -1,26 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import style from './Dashboard.module.css';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import * as util from '../../../util/util';
-import Wrapper from '../../../containers/Wrapper/Wrapper';
-import * as icons from '../../../util/icons';
-import Navigation from '../../UI/Navigation/Navigation';
-import MenuItem from '../../UI/Navigation/MenuItem/MenuItem';
-import { IoBookSharp, IoPersonCircleOutline } from 'react-icons/io5';
-import { MdHome, MdPlayCircleOutline, MdSearch } from 'react-icons/md';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Viewport from '../../../containers/Viewport/Viewport';
-import Home from './pages/Home/Home';
+import * as util from '../../../util/util';
+import Navigation from '../../UI/Navigation/Navigation';
+import style from './Dashboard.module.css';
 import Courses from './pages/Courses/Courses';
+import Home from './pages/Home/Home';
+import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 import Solution from './pages/Solution/Solution';
-import Profile from './pages/Profile/Profile';
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
   const selfRef = useRef(null);
   const shouldLoadApp = useRef(true);
   const location = useLocation();
+  const [hideNavigation, setHideNavigation] = useState(false);
   let componentToRender = null;
 
   useEffect(() => {
@@ -30,11 +26,17 @@ const Dashboard = (props) => {
     }
   });
 
+  const hideNavigationHandler = (hide) => {
+    setHideNavigation(hide);
+  }
+
   const renderComponent = () => {
     console.log("Location: ", location.pathname);
     switch (location.pathname) {
       case '/dashboard/home':
-        componentToRender = <Home />;
+        componentToRender = <Home
+          hideNavigation={hideNavigation}
+          hideNavigationHandler={hideNavigationHandler} />;
         break;
 
       case '/dashboard/courses':
@@ -72,8 +74,10 @@ const Dashboard = (props) => {
 
   return (
     <div className={style.dashboard} ref={selfRef}>
-      <Navigation />
-
+      {
+        !hideNavigation ? <Navigation /> : null
+      }
+      
       <Viewport>{componentToRender}</Viewport>
     </div>
   );

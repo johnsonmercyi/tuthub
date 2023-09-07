@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import style from './Loader.module.css';
 import * as util from '../../../../util/util';
 
-const Loader = ({load, message, successHandler, ...props}) => {
+const Loader = ({ load, message, successHandler, ...props }) => {
   const selfRef = useRef(null);
   const loaderRef = useRef(null);
 
@@ -14,17 +14,17 @@ const Loader = ({load, message, successHandler, ...props}) => {
     } else {
       hideLoader();
     }
-
   }, [load]);
 
   const spinLoader = () => {
-    util.animate(loaderRef.current, 0, 2000, Infinity, "ease-in-out", [
+    util.animate(loaderRef.current, 0, 1000, Infinity, "ease-in-out", [
       { transform: "rotate(360deg)" }
     ]);
   }
 
   const showLoader = () => {
     selfRef.current.style.display = "flex";
+    selfRef.current.style.zIndex = "200";
     util.animate(selfRef.current, 0, 500, 1, "ease-in-out", [
       { opacity: 0 },
       { opacity: 1 },
@@ -39,10 +39,13 @@ const Loader = ({load, message, successHandler, ...props}) => {
       { opacity: 0 },
     ], () => {
       selfRef.current.style.display = "none";
+      util.animate(loaderRef.current, 0, 0, 1, "ease-in-out", [
+        { transform: "none" }
+      ]);
     });
   }
 
-  
+
 
   return (
     <div className={style.loader} ref={selfRef}>

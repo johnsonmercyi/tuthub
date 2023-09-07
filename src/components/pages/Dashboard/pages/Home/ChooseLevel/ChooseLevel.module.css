@@ -1,0 +1,79 @@
+/*Mobile First Style*/
+.chooseLevel {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  overflow-y: auto;
+
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  z-index: 99;
+
+  background-color: white;
+}
+
+.header {
+  width: 100%;
+  height: 4rem;
+
+  position: relative;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.03);
+
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.backButton {
+  width: 4rem;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.7rem;
+}
+
+.title {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  /* margin-top: 4rem; */
+}
+
+.levelsList {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 1rem;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

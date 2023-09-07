@@ -36,7 +36,7 @@ const Welcome = (props) => {
         { opacity: "0" },
       ], () => {
         //load new page here...
-        navigate('/dashboard');
+        navigate('/dashboard/home');
       });
     }, 0);
   }

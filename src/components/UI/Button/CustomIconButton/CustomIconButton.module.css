@@ -1,0 +1,43 @@
+/*Mobile First Style*/
+.customIconButton {
+  width: 90%;
+  height: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #fff;
+  color: #5a93d6;
+
+  margin: 0.3rem 0;
+
+  position: relative;
+
+  border-radius: 0.5rem;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.05);
+}
+
+.image {
+  width: 3rem;
+  height: 100%;
+
+  position: absolute;
+  top: initial;
+  left: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.4rem;
+
+  color: rgba(128, 128, 128, 1);
+
+  padding: 0.15rem;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}
