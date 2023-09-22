@@ -35,12 +35,12 @@ const Dashboard = (props) => {
     switch (location.pathname) {
       case '/dashboard/home':
         componentToRender = <Home
-          hideNavigation={hideNavigation}
           hideNavigationHandler={hideNavigationHandler} />;
         break;
 
       case '/dashboard/courses':
-        componentToRender = <Courses />;
+        componentToRender = <Courses
+          hideNavigationHandler={hideNavigationHandler} />;
         break;
 
       case '/dashboard/search':

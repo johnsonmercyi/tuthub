@@ -16,8 +16,10 @@ import style from './Home.module.css';
 import ChooseLevel from './ChooseLevel/ChooseLevel';
 import { fetchAcademicLevels, fetchFaculties, fetchSubAcademicLevels } from '../../../../../util/DummyDb';
 import Loader from '../../../utility/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
+  const navigate = useNavigate();
   const shouldAppLoad = useRef(true);
 
   const [chooseLevel, setChooseLevel] = useState(false);
@@ -32,7 +34,7 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
   useEffect(() => {
     if (shouldAppLoad) {
       shouldAppLoad.current = false;
-      setChooseLevelHistory([{name: "home", target: null}]);
+      setChooseLevelHistory([{ name: "home", target: null }]);
     }
   }, []);
 
@@ -85,6 +87,10 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
     } else if (previousPage.name === "sub_academic_level") {
       //load in the sub academic level page
     }
+  }
+
+  const subjectsHandler = () => {
+    navigate('/dashboard/courses');
   }
 
   return (
@@ -196,7 +202,11 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
           alignItems: "center",
           padding: "0 0.3rem",
         }}>
-          <MiniCard title={"Subjects"} content={"145 Courses"} image={<IoBookOutline />} />
+          <MiniCard
+            title={"Subjects"}
+            content={"145 Courses"}
+            image={<IoBookOutline />}
+            onClickHandler={subjectsHandler} />
           <MiniCard title={"Live Lessons"} content={"120 Courses"} image={<IoPlayCircleOutline />} />
           <MiniCard title={"Take Exams"} content={"145 Courses"} image={<MdOutlineAddHomeWork />} />
         </Wrapper>

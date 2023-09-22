@@ -27,7 +27,9 @@ const AppContainer = ({ classes = [], ...props }) => {
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="/dashboard/home" element={<Outlet />} />
-          <Route path="/dashboard/courses" element={<Outlet />} />
+          <Route path="/dashboard/courses" element={<Outlet />} >
+            <Route path="/dashboard/courses/video" element={<Outlet />} />
+          </Route>
           <Route path="/dashboard/search" element={<Outlet />} />
           <Route path="/dashboard/solution" element={<Outlet />} />
           <Route path="/dashboard/profile" element={<Outlet />} />
