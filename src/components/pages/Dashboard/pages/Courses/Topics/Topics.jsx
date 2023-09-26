@@ -72,11 +72,12 @@ const Topics = ({ launch, topicData = { topic: null, id: null }, closeHandler, .
         {
           showVideo ?
             <div className={style.videoContainer} ref={videoContainerRef}>
-              <VideoPlayer videoUrl={"https://www.youtube.com/watch?v=qOp4Y2_g5ZI"}/>
+              <VideoPlayer videoUrl={topics[0].link}/>
             </div> :
 
             <div className={style.topicList} ref={topicListRef}>
               {
+                topics && topics.length ?
                 topics && topics.map((topic, index) => {
                   return (
                     <CustomIconButton
@@ -86,7 +87,7 @@ const Topics = ({ launch, topicData = { topic: null, id: null }, closeHandler, .
                       label={topic.title}
                       key={topic.title + "_" + index} />
                   );
-                })
+                }) : <span style={{ width: "100%", color: "gray", textAlign: "center", fontSize: "0.9rem" }}>No topics for { topicData && topicData.topic }</span>
               }
             </div>
         }

@@ -16,11 +16,17 @@ import style from './Home.module.css';
 import ChooseLevel from './ChooseLevel/ChooseLevel';
 import { fetchAcademicLevels, fetchFaculties, fetchSubAcademicLevels } from '../../../../../util/DummyDb';
 import Loader from '../../../utility/Loader/Loader';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../../../../containers/AppContainer/AppContainer';
 
 const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
+  //Global state managed by application context
+  const { user, activeSubLevel, levels, courses } = useAppContext();
+
   const navigate = useNavigate();
   const shouldAppLoad = useRef(true);
+
+  console.log("Active Level: ", user);
 
   const [chooseLevel, setChooseLevel] = useState(false);
   const [academicLevels, setAcademicLevels] = useState(fetchAcademicLevels);
@@ -32,7 +38,7 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
 
 
   useEffect(() => {
-    if (shouldAppLoad) {
+    if (shouldAppLoad.current) {
       shouldAppLoad.current = false;
       setChooseLevelHistory([{ name: "home", target: null }]);
     }
@@ -59,6 +65,8 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
         setLoad(false);
         setChooseLevelHistory(history => [...history, { name: "academic_level", target: level }]);
       }, 2000);
+    } else if (true) {
+
     }
 
   }
@@ -109,7 +117,7 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
       }}>
         {/* Greeting and Search bar */}
         <Wrapper styleClass={[style.wrapper]}>
-          <span className={style.greeting}>Hello Soft!</span>
+          <span className={style.greeting}>Hello &nbsp;<span style={{ fontWeight: "600" }}>{user && user.name}</span></span>
           <span className={style.searchIcon}><IoSearch /></span>
         </Wrapper>
 
@@ -175,7 +183,7 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
           </div>
           <div className={style.activeLevel}>
             <span className={style.activeLabel}>Active:</span>
-            <span className={style.active}>Basic One</span>
+            <span className={style.active}>{activeSubLevel && activeSubLevel.name}</span>
           </div>
         </Wrapper>
       </Wrapper>
@@ -204,7 +212,7 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
         }}>
           <MiniCard
             title={"Subjects"}
-            content={"145 Courses"}
+            content={`${courses ? (courses.length > 1 ? courses.length + " Courses" : courses.length + " Course") : 0}`}
             image={<IoBookOutline />}
             onClickHandler={subjectsHandler} />
           <MiniCard title={"Live Lessons"} content={"120 Courses"} image={<IoPlayCircleOutline />} />

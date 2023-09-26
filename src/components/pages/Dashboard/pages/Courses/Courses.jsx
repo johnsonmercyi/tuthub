@@ -8,21 +8,19 @@ import style from './Courses.module.css';
 import { useLocation } from 'react-router-dom';
 import Wrapper from '../../../../../containers/Wrapper/Wrapper';
 import Topics from './Topics/Topics';
+import { useAppContext } from '../../../../../containers/AppContainer/AppContainer';
 
 const Courses = ({ hideNavigationHandler, ...props}) => {
+  const { courses } = useAppContext();
   const shouldLoad = useRef(true);
 
-  const [courses, setCourses] = useState(null);
+  // const [courses, setCourses] = useState(null);
   const [topicData, setTopicData] = useState(null);
   const [launchTopics, setLaunchTopics] = useState(false);
-
-  const location = useLocation();
-  let componentToRender = null;
 
   useEffect(() => {
     if (shouldLoad.current) {
       shouldLoad.current = false;
-      setCourses(fetchCourses);
     }
   }, []);
 

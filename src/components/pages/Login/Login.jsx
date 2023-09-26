@@ -10,9 +10,12 @@ import signUpImage from '../../../resources/images/sign-up.png';
 import loginImage from '../../../resources/images/login-image.png';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../utility/Loader/Loader';
+import * as dummyDb from '../../../util/DummyDb';
+import { useAppContext } from '../../../containers/AppContainer/AppContainer';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useAppContext();
 
   const shouldLoadApp = useRef(true);
   const selfRef = useRef(null);
@@ -84,7 +87,7 @@ const Login = () => {
         { opacity: "0" },
       ], () => {
         //load new page here...
-        navigate('/welcome', {state: {username: username}});
+        navigate('/welcome');
       });
     }, 0);
   }
@@ -112,15 +115,26 @@ const Login = () => {
   const loginHandler = () => {
     if (validateLoginField()) {
       console.log("Validation...");
-      setLoad(true);//show loading
       /**
        * ⚠️Submit form here for 
        * user authentication.
        */
-      setTimeout(() => {
-        console.log("You logged in! 😃");
-        navigateToWelcome();
-      }, util.getRandomTime());
+      const userDetails = dummyDb.fetchUsers("username", username);
+
+      if (userDetails.length) {
+        if (userDetails[0].password === password) {
+          setLoad(true);//show loading
+          setUser(userDetails[0]);
+          setTimeout(() => {
+            console.log("You logged in! 😃");
+            navigateToWelcome();
+          }, util.getRandomTime());
+        } else {
+          //⚠️ Handle invalid password here
+        }
+      } else {
+        //⚠️ Handle login failure here
+      }
     }
   }
 

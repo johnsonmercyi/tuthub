@@ -12,19 +12,25 @@ import Search from './pages/Search/Search';
 import Solution from './pages/Solution/Solution';
 
 const Dashboard = (props) => {
+
   const navigate = useNavigate();
   const selfRef = useRef(null);
   const shouldLoadApp = useRef(true);
   const location = useLocation();
+
+  /**
+   * Component State
+   */
   const [hideNavigation, setHideNavigation] = useState(false);
+
   let componentToRender = null;
 
   useEffect(() => {
-    if (shouldLoadApp) {
+    if (shouldLoadApp.current) {
       shouldLoadApp.current = false;
       display();
     }
-  });
+  }, []);
 
   const hideNavigationHandler = (hide) => {
     setHideNavigation(hide);
@@ -68,7 +74,6 @@ const Dashboard = (props) => {
       { opacity: "1" },
     ], () => {
       //do something else after loading page like: https request...
-
     });
   }
 
@@ -77,7 +82,7 @@ const Dashboard = (props) => {
       {
         !hideNavigation ? <Navigation /> : null
       }
-      
+
       <Viewport>{componentToRender}</Viewport>
     </div>
   );
