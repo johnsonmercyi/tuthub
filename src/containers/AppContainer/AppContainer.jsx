@@ -16,10 +16,22 @@ const AppContainer = ({ classes = [], ...props }) => {
   const shouldLoadApp = useRef(true);
 
   //Application Global State
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [courses, setCourses] = useState([]);
-  const [levels, setLevels] = useState([]);
+  const [academicLevels, setAcademicLevels] = useState([]);
+  const [subAcademicLevels, setSubAcademicLevels] = useState([]);
+  const [userActiveSubLevels, setUserActiveSubLevels] = useState([]);
   const [activeSubLevel, setActiveSubLevel] = useState(null);
+
+  function setLocalStorageData(key, value) {
+    if ( typeof value === 'object') {
+      localStorage.setItem(key, JSON.stringify(value))
+    } else localStorage.setItem(key, value);
+  }
+
+  function getLocalStorageData(key) {
+    return JSON.parse(localStorage.getItem(key));
+  }
 
   useLayoutEffect(() => {
     if (shouldLoadApp.current) {
@@ -30,10 +42,12 @@ const AppContainer = ({ classes = [], ...props }) => {
 
   return (
     <AppContext.Provider value={{
-      user, setUser,
       courses, setCourses,
-      levels, setLevels,
-      activeSubLevel, setActiveSubLevel
+      academicLevels, setAcademicLevels,
+      subAcademicLevels, setSubAcademicLevels,
+      activeSubLevel, setActiveSubLevel,
+      getLocalStorageData, setLocalStorageData,
+      userActiveSubLevels, setUserActiveSubLevels,
     }}>
       <div className={[style.appContainer, classes.join(",")].join(" ")}>
         <Routes>

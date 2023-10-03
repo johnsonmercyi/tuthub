@@ -10,8 +10,13 @@ import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 import Solution from './pages/Solution/Solution';
+import * as dummyDb from '../../../util/DummyDb';
+import { useAppContext } from '../../../containers/AppContainer/AppContainer';
 
 const Dashboard = (props) => {
+
+  const { getLocalStorageData, setLevels, activeSubLevel, setActiveSubLevel, setCourses, setUserActiveSubLevels } = useAppContext();
+  const user = getLocalStorageData("user");
 
   const navigate = useNavigate();
   const selfRef = useRef(null);
@@ -24,13 +29,14 @@ const Dashboard = (props) => {
   const [hideNavigation, setHideNavigation] = useState(false);
 
   let componentToRender = null;
+  console.log("DASHBOARD: ", activeSubLevel);
 
   useEffect(() => {
     if (shouldLoadApp.current) {
       shouldLoadApp.current = false;
       display();
     }
-  }, []);
+  }, [activeSubLevel]);
 
   const hideNavigationHandler = (hide) => {
     setHideNavigation(hide);
@@ -74,6 +80,7 @@ const Dashboard = (props) => {
       { opacity: "1" },
     ], () => {
       //do something else after loading page like: https request...
+      
     });
   }
 

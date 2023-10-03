@@ -2,47 +2,83 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { IoAppsOutline, IoArchiveSharp, IoAttachSharp, IoBookOutline, IoPlayCircleOutline, IoSearch } from 'react-icons/io5';
 import { MdOutlineAddHomeWork } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../../../../containers/AppContainer/AppContainer';
 import Wrapper from '../../../../../containers/Wrapper/Wrapper';
 import image1 from '../../../../../resources/images/1.png';
 import image2 from '../../../../../resources/images/2.png';
 import image3 from '../../../../../resources/images/3.png';
 import image4 from '../../../../../resources/images/4.png';
+import * as dummyDb from '../../../../../util/DummyDb';
 import ripple from '../../../../../util/ripple.module.css';
 import Carousel from '../../../../UI/Carousel/Carousel';
 import TitleListContainer from '../../../../UI/TitleListContainer/TitleListContainer';
 import MiniCard from '../../../../UI/cards/MiniCard/MiniCard';
 import SimpleCard from '../../../../UI/cards/SimpleCard/SimpleCard';
-import style from './Home.module.css';
-import ChooseLevel from './ChooseLevel/ChooseLevel';
-import { fetchAcademicLevels, fetchFaculties, fetchSubAcademicLevels } from '../../../../../util/DummyDb';
 import Loader from '../../../utility/Loader/Loader';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppContext } from '../../../../../containers/AppContainer/AppContainer';
+import ChooseLevel from './ChooseLevel/ChooseLevel';
+import style from './Home.module.css';
 
 const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
   //Global state managed by application context
-  const { user, activeSubLevel, levels, courses } = useAppContext();
+  const { getLocalStorageData, 
+    academicLevels, setAcademicLevels, 
+    subAcademicLevels, setSubAcademicLevels,
+    userActiveSubLevels, setUserActiveSubLevels, 
+    activeSubLevel, setActiveSubLevel, 
+    courses, setCourses } = useAppContext();
+
+  const user = getLocalStorageData("user");
 
   const navigate = useNavigate();
   const shouldAppLoad = useRef(true);
 
-  console.log("Active Level: ", user);
-
   const [chooseLevel, setChooseLevel] = useState(false);
-  const [academicLevels, setAcademicLevels] = useState(fetchAcademicLevels);
-  const [subAcademicLevels, setSubAcademicLevels] = useState(null);
-  const [chooseLevelData, setChooseLevelData] = useState(academicLevels);
+  const [chooseLevelData, setChooseLevelData] = useState([]);
   const [load, setLoad] = useState(false);
-
   const [chooseLevelhistory, setChooseLevelHistory] = useState([]);
 
 
+  //For when app loads
   useEffect(() => {
     if (shouldAppLoad.current) {
       shouldAppLoad.current = false;
+
       setChooseLevelHistory([{ name: "home", target: null }]);
+
+      appData().then((results) => {
+        const levels = results[0];
+        const userActiveSubLevels = results[1];
+        const activeSubLevel = userActiveSubLevels.filter(level => level.user_id === user.id)[0];
+        const subLevelCourses = dummyDb.fetchUserSublevelCourses(activeSubLevel.sub_academic_level_id);
+  
+        //Update global state using app context
+        setAcademicLevels(levels);
+        setActiveSubLevel(dummyDb.fetchActiveSubLevelDetails(activeSubLevel.sub_academic_level_id)[0]);
+        setCourses(subLevelCourses);
+        setUserActiveSubLevels(userActiveSubLevels);
+  
+        //set local state
+        setChooseLevelData(levels);
+      });
     }
   }, []);
+
+  //For updates only
+  useEffect(()=> {
+    if (userActiveSubLevels.length) {
+      const activeSubLevel = userActiveSubLevels.filter(level => level.user_id === user.id)[0];
+      const subLevelCourses = dummyDb.fetchUserSublevelCourses(activeSubLevel.sub_academic_level_id);
+  
+      //Update global state using app context
+      setCourses(subLevelCourses);
+    }
+
+    return () => {
+      //do some final things and clean ups here...
+      console.log("Level History: ", chooseLevelhistory);
+    }
+  }, [activeSubLevel]);
 
   const chooseLevelHandler = () => {
     hideNavigationHandler(true);
@@ -50,23 +86,62 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
   }
 
   const levelClickHandler = (id, level, type) => {
+    // console.log("Clicked: ", id, level, type);
     //Make Http Request here...
-    if (type === "basic") {
+    if (type === "primary" || type === "secondary") {
       setLoad(true);
       setTimeout(() => {
-        setChooseLevelData(fetchSubAcademicLevels("academic_level_id", id));
+        setChooseLevelData(dummyDb.fetchSubAcademicLevels("academic_level_id", id));
         setLoad(false);
         setChooseLevelHistory(history => [...history, { name: "academic_level", target: level }]);
       }, 2000);
     } else if (type === "tertiary") {
       setLoad(true);
       setTimeout(() => {
-        setChooseLevelData(fetchFaculties("academic_level_id", id));
+        setChooseLevelData(dummyDb.fetchFaculties("academic_level_id", id));
         setLoad(false);
         setChooseLevelHistory(history => [...history, { name: "academic_level", target: level }]);
       }, 2000);
-    } else if (true) {
+    } else if (type === "basic" || type === "jss" || type === "ss") {
+      //Do sub level selection
+      const updatedUserActiveSubLevels = userActiveSubLevels.map(subLevel => {
+        // Check if the current subLevel matches the one you want to update
+        if (subLevel.user_id === user.id) {
+          // Create a deep copy of the subLevel to avoid mutating the original state
+          const updatedSubLevel = JSON.parse(JSON.stringify(subLevel));
 
+          // Update the relevant property in the copied subLevel
+          updatedSubLevel.sub_academic_level_id = id;
+
+          // Return the updated subLevel
+          return updatedSubLevel;
+        }
+
+        // For other subLevels, return them as they are
+        return subLevel;
+      });
+
+      //Do some http database update
+      //fake update process
+      dummyDb.updateUserActiveSubLevel(updatedUserActiveSubLevels)
+      .then(newData => {
+        // Now, set the state with the updated userActiveSubLevels
+        setUserActiveSubLevels((prev) => newData);
+
+        let activeLevelObj = newData.find(level => level.user_id === user.id);
+        const newActiveSubLevel = dummyDb.fetchActiveSubLevelDetails(activeLevelObj.sub_academic_level_id)[0];
+
+        setActiveSubLevel(prev => {
+          return newActiveSubLevel;
+        });
+
+        //set UI states
+        setChooseLevel(false);
+        hideNavigationHandler(false);
+        setChooseLevelHistory([{ name: "home", target: null }]);
+        setChooseLevelData(dummyDb.fetchAcademicLevels());
+      });
+      
     }
 
   }
@@ -87,7 +162,7 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
       //Make Http Request here...
       setLoad(true);
       setTimeout(() => {
-        setChooseLevelData(fetchAcademicLevels());
+        setChooseLevelData(dummyDb.fetchAcademicLevels());
         setLoad(false);
         setChooseLevelHistory(chooseLevelhistory.slice(0, previousIndex));
       }, 2000);
@@ -99,6 +174,37 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
 
   const subjectsHandler = () => {
     navigate('/dashboard/courses');
+  }
+
+  async function appData() {
+    const levels = fetchLevels();
+    const activeLevels = fetchUserActiveSubLevels();
+    const usersSubLevelcourses = fetchSubAcademicLevelsCourses();
+    const courses = fetchCourses();
+
+    const data = await Promise.all([levels, activeLevels, usersSubLevelcourses, courses]);
+
+    return data;
+  }
+
+  async function fetchLevels() {
+    //Do http request here to fetch all levels
+    return await dummyDb.fetchAcademicLevels();
+  }
+
+  async function fetchUserActiveSubLevels() {
+    //Do http request here to fetch all users active levels
+    return await dummyDb.fetchUserActiveSubLevels();
+  }
+
+  async function fetchSubAcademicLevelsCourses() {
+    //Do http request here to fetch all sub level courses
+    return await dummyDb.fetchSubAcademicLevelsCourses();
+  }
+
+  async function fetchCourses() {
+    //Do http request here to fetch all courses
+    return await dummyDb.fetchCourses();
   }
 
   return (

@@ -1,47 +1,48 @@
-const users = [
+//Dummy users entity
+localStorage.setItem('users', JSON.stringify([
   { id: 1, name: 'John Doe', email: 'johndoe@mail.com', gender: 'M', username: 'johndoe', password: '12345678' },
   { id: 2, name: 'Jane Doe', email: 'janedoe@mail.com', gender: 'F', username: 'janedoe', password: '12345678' },
-];
+]));
 
-const academic_levels = [
-  { id: 1, name: 'Primary/Basic', type: "basic" },
-  { id: 2, name: 'Secondary', type: "basic" },
+//Dummy academic_levels entity
+localStorage.setItem('academic_levels', JSON.stringify([
+  { id: 1, name: 'Primary/Basic', type: "primary" },
+  { id: 2, name: 'Secondary', type: "secondary" },
   { id: 3, name: 'University', type: "tertiary" },
   { id: 4, name: 'Tertiary', type: "tertiary" },
-];
+]));
 
-const sub_academic_levels = [
-  { id: 1, academic_level_id: 1, name: "Basic 1"},
-  { id: 2, academic_level_id: 1, name: "Basic 2" },
-  { id: 3, academic_level_id: 1, name: "Basic 3" },
-  { id: 4, academic_level_id: 1, name: "Basic 4" },
-  { id: 5, academic_level_id: 1, name: "Basic 5" },
-  { id: 6, academic_level_id: 1, name: "Basic 6" },
-  { id: 7, academic_level_id: 2, name: "JSS 1" },
-  { id: 8, academic_level_id: 2, name: "JSS 2" },
-  { id: 9, academic_level_id: 2, name: "JSS 3" },
-  { id: 10, academic_level_id: 2, name: "SS 1" },
-  { id: 11, academic_level_id: 2, name: "SS 2" },
-  { id: 12, academic_level_id: 2, name: "SS 3" },
-];
+//Dummy sub_academic_levels entity
+localStorage.setItem('sub_academic_levels', JSON.stringify([
+  { id: 1, academic_level_id: 1, name: "Basic 1", type: "basic" },
+  { id: 2, academic_level_id: 1, name: "Basic 2", type: "basic" },
+  { id: 3, academic_level_id: 1, name: "Basic 3", type: "basic" },
+  { id: 4, academic_level_id: 1, name: "Basic 4", type: "basic" },
+  { id: 5, academic_level_id: 1, name: "Basic 5", type: "basic" },
+  { id: 6, academic_level_id: 1, name: "Basic 6", type: "basic" },
+  { id: 7, academic_level_id: 2, name: "JSS 1", type: "jss" },
+  { id: 8, academic_level_id: 2, name: "JSS 2", type: "jss" },
+  { id: 9, academic_level_id: 2, name: "JSS 3", type: "jss" },
+  { id: 10, academic_level_id: 2, name: "SS 1", type: "ss" },
+  { id: 11, academic_level_id: 2, name: "SS 2", type: "ss" },
+  { id: 12, academic_level_id: 2, name: "SS 3", type: "ss" },
+]));
 
-/**
- * This entity should be created
- * for this where users active
- * classes/sub_levels/levels are saved
- */
-const user_active_sub_levels = [
+//Dummy user_active_sub_levels entity
+localStorage.setItem('user_active_sub_levels', JSON.stringify([
   { id: 1, user_id: 1, sub_academic_level_id: 1 },
   { id: 2, user_id: 2, sub_academic_level_id: 9 },
-];
+]));
 
-const faculties = [
+//Dummy faculties entity
+localStorage.setItem('faculties', JSON.stringify([
   { id: 1, academic_level_id: 3, name: "Natural Science" },
   { id: 2, academic_level_id: 3, name: "Art" },
   { id: 3, academic_level_id: 3, name: "Useless Law" },
-];
+]));
 
-const courses = [
+//Dummy courses entity
+localStorage.setItem('courses', JSON.stringify([
   { id: 1, name: "English Language" },
   { id: 2, name: "Physics" },
   { id: 3, name: "Chemistry" },
@@ -51,9 +52,10 @@ const courses = [
   { id: 7, name: "Commerce" },
   { id: 8, name: "Mathematics" },
   { id: 9, name: "Social Studies" },
-];
+]));
 
-const sub_academic_level_courses = [
+//Dummy courses entity
+localStorage.setItem('sub_academic_level_courses', JSON.stringify([
   //Basic 1 to 6 offer English Language
   { id: 1, course_id: 1, sub_academic_level_id: 1 },
   { id: 2, course_id: 1, sub_academic_level_id: 2 },
@@ -94,11 +96,12 @@ const sub_academic_level_courses = [
   { id: 25, course_id: 9, sub_academic_level_id: 7 },
   { id: 26, course_id: 9, sub_academic_level_id: 8 },
   { id: 27, course_id: 9, sub_academic_level_id: 9 },
-  
-   //continue from creating the sub_academic_level_courses DB object here...
-];
 
-const topics = [
+  //continue from creating the sub_academic_level_courses DB object here...
+]));
+
+//Dummy courses entity
+localStorage.setItem('topics', JSON.stringify([
   { id: 1, course_id: 1, title: "History of the English Language", link: "https://youtu.be/B-KgXbROP4c" },
   { id: 2, course_id: 1, title: "Grammar and Syntax", link: "https://youtu.be/B-KgXbROP4c" },
   { id: 3, course_id: 1, title: "Phonetics and Phonology", link: "https://youtu.be/B-KgXbROP4c" },
@@ -131,7 +134,7 @@ const topics = [
   { id: 30, course_id: 9, title: "Sociology", link: "https://www.youtube.com/watch?v=jYIXwmyri-Y" },
   { id: 31, course_id: 9, title: "Archaeology", link: "https://www.youtube.com/watch?v=jYIXwmyri-Y" },
   { id: 32, course_id: 9, title: "Urban Studies", link: "https://www.youtube.com/watch?v=jYIXwmyri-Y" },
-];
+]));
 
 /**
  * Fetch filtered users details by the specific `column`.
@@ -144,34 +147,44 @@ const topics = [
  * specified, else all `users` information will be returned.
  */
 export const fetchUsers = (column, value) => {
+  const userData = JSON.parse(localStorage.getItem('users'));
   if (column && value) {
-    return users.filter(user => user[column] === value);
+    return userData.filter(user => user[column] === value);
   }
-  return users;
+  return userData;
 }
 
 export const fetchUserActiveSubLevels = (column, value) => {
+  const userActiveSubLevels = JSON.parse(localStorage.getItem('user_active_sub_levels'));
   if (column && value) {
-    return user_active_sub_levels.filter(subLevel => subLevel[column] === value);
+    return userActiveSubLevels.filter(subLevel => subLevel[column] === value);
   }
-  return user_active_sub_levels;
+  return userActiveSubLevels;
+}
+
+export const updateUserActiveSubLevel = async (data) => {
+  localStorage.setItem('user_active_sub_levels', JSON.stringify(data));
+  return await fetchUserActiveSubLevels();
 }
 
 export const fetchAcademicLevels = (columnName, value) => {
+  const academicLevels = JSON.parse(localStorage.getItem('academic_levels'));
   if (columnName && value) {
-    return academic_levels.filter(academicLevel => academicLevel[columnName] === value);
+    return academicLevels.filter(academicLevel => academicLevel[columnName] === value);
   }
-  return academic_levels;
+  return academicLevels;
 }
 
 export const fetchSubAcademicLevels = (columnName, value) => {
+  const subAcademicLevels = JSON.parse(localStorage.getItem('sub_academic_levels'));
   if (columnName && value) {
-    return sub_academic_levels.filter(subObj => subObj[columnName] === value);
+    return subAcademicLevels.filter(subObj => subObj[columnName] === value);
   }
-  return sub_academic_levels;
+  return subAcademicLevels;
 }
 
 export const fetchFaculties = (columnName, value) => {
+  const faculties = JSON.parse(localStorage.getItem('faculties'));
   if (columnName && value) {
     return faculties.filter(subObj => subObj[columnName] === value);
   }
@@ -179,6 +192,7 @@ export const fetchFaculties = (columnName, value) => {
 }
 
 export const fetchCourses = (columnName, value) => { 
+  const courses = JSON.parse(localStorage.getItem('courses'));
   if (columnName && value) {
     return courses.filter(course => course[columnName] === value);
   }
@@ -186,16 +200,18 @@ export const fetchCourses = (columnName, value) => {
 }
 
 export const fetchSubAcademicLevelsCourses = (columnName, value) => {
+  const subAcademicLevelCourses = JSON.parse(localStorage.getItem('sub_academic_level_courses'));
   if (columnName && value) {
-    return sub_academic_level_courses.filter(course => course[columnName] === value);
+    return subAcademicLevelCourses.filter(course => course[columnName] === value);
   }
-  return sub_academic_level_courses;
+  return subAcademicLevelCourses;
 }
 
 export const fetchUserSublevelCourses = (subAcademicLevelId) => {
   return fetchSubAcademicLevelsCourses("sub_academic_level_id", subAcademicLevelId)
   .map(subLevelCourse => {
-    return courses.find(course => course.id === subLevelCourse.course_id);
+
+    return fetchCourses().find(course => course.id === subLevelCourse.course_id);
   });
 }
 
@@ -204,6 +220,7 @@ export const fetchActiveSubLevelDetails = (subLevelDetailsId) => {
 }
 
 export const fetchTopics = (columnName, value) => {
+  const topics = JSON.parse(localStorage.getItem('topics'));
   if (columnName && value) {
     return topics.filter(topicsObj => topicsObj[columnName] === value);
   }

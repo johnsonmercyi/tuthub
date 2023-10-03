@@ -15,7 +15,7 @@ import { useAppContext } from '../../../containers/AppContainer/AppContainer';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useAppContext();
+  const { setLocalStorageData } = useAppContext();
 
   const shouldLoadApp = useRef(true);
   const selfRef = useRef(null);
@@ -124,7 +124,8 @@ const Login = () => {
       if (userDetails.length) {
         if (userDetails[0].password === password) {
           setLoad(true);//show loading
-          setUser(userDetails[0]);
+          
+          setLocalStorageData("user", userDetails[0]);
           setTimeout(() => {
             console.log("You logged in! 😃");
             navigateToWelcome();
