@@ -28,6 +28,8 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
     activeSubLevel, setActiveSubLevel, 
     courses, setCourses } = useAppContext();
 
+  // console.log("Active: ", activeSubLevel);
+
   const user = getLocalStorageData("user");
 
   const navigate = useNavigate();
@@ -335,11 +337,31 @@ const Home = ({ hideNavigationHandler, showNavigationHandler, ...props }) => {
           padding: "0.5rem 0.4rem",
         }}>
           {/* Past Questions and Answers Component */}
-          <TitleListContainer title={"Past Questions and Answers"}>
+          {
+            activeSubLevel && activeSubLevel.type === "basic" ?
+              <TitleListContainer title={"Past Questions and Answers"}>
+                <SimpleCard image={<IoAppsOutline />} title={"Class Past Questions"} />
+                <SimpleCard image={<IoAttachSharp />} title={"Common Entrance Past Questions"} />
+              </TitleListContainer> : activeSubLevel && activeSubLevel.type === "jss" ?
+              <TitleListContainer title={"Past Questions and Answers"}>
+                <SimpleCard image={<IoAppsOutline />} title={"Class Past Questions"} />
+                <SimpleCard image={<IoAttachSharp />} title={"Jnr. WAEC Past Questions"} />
+              </TitleListContainer> : activeSubLevel && activeSubLevel.type === "ss" ?
+              <TitleListContainer title={"Past Questions and Answers"}>
+                <SimpleCard image={<IoAppsOutline />} title={"UTME Questions"} />
+                <SimpleCard image={<IoArchiveSharp />} title={"JAMB Past Questions"} />
+                <SimpleCard image={<IoAttachSharp />} title={"WAEC Past Questions"} />
+              </TitleListContainer> : 
+              <TitleListContainer title={"Past Questions and Answers"}>
+                <SimpleCard image={<IoAppsOutline />} title={"Department Past Questions"} />
+              </TitleListContainer>
+
+          }
+          {/* <TitleListContainer title={"Past Questions and Answers"}>
             <SimpleCard image={<IoAppsOutline />} title={"UTME Questions"} />
             <SimpleCard image={<IoArchiveSharp />} title={"JAMB Past Questions"} />
             <SimpleCard image={<IoAttachSharp />} title={"WAEC Past Questions"} />
-          </TitleListContainer>
+          </TitleListContainer> */}
 
           {/* Explore Courses Component */}
           <TitleListContainer title={"Explore Our Courses"}>
